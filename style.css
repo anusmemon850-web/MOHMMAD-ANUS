@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>background color</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <table  width="100%">
+        <tr align="center">
+            <td>
+                <u><i><h1>color shade </h1></i></u>
+            </td>
+    </tr>
+    </table>
+    <table width="60%" height="500px" align="center=">
+        <tr>
+
+
+          <td style="background-color:rgb(255,3,3);"></td>
+        </tr>
+        <tr>
+          <td style="background-color:rgb(255, 3, 24);"></td>
+        </tr>
+        <tr>
+            <td style="background-color:rgb(255, 3, 45);"></td>
+            </tr>
+            <tr>
+                <td style="background-color:rgb(255, 3, 66);"></td>
+                </tr>
+                <tr>
+                    <td style="background-color:rgb(255, 3, 87);"></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:rgb(255, 3, 108);"></td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:rgb(255, 3, 129);"></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:rgb(255, 3, 150);"></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:rgb(255, 3, 171);"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color:rgb(255, 3, 192);"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color:rgb(255, 3, 213);"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="background-color:rgb(255, 3, 234);"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color:rgb(255, 3, 255);"></td>
+                                                    </tr>
+    </table>
+</body>
+</html>
