@@ -1,649 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>School Student Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opposite Direction Animation</title>
+
 <style>
-  :root{
-    --bg1: linear-gradient(135deg,#0f172a 0%, #0b3d91 45%, #0b6aa8 100%);
-    --card:#ffffff;
-    --muted:#6b7280;
-    --accent:#0b6aa8;
-    --glass: rgba(255,255,255,0.06);
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f4f4;
+    overflow: hidden;
   }
-  *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,"Noto Sans",sans-serif}
-  html,body{height:100%;margin:0;background:var(--bg1);color:#111827}
-  /* Container */
-  .app{
-    min-height:100vh;
-    display:flex;
-    gap:24px;
-    padding:28px;
-    align-items:flex-start;
+
+  .container {
+    position: relative;
+    width: 100%;
+    height: 200px;
   }
-  /* Sidebar */
-  .sidebar{
-    width:260px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-    border-radius:14px;
-    padding:20px;
-    color:#fff;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.5);
-    flex-shrink:0;
-    backdrop-filter: blur(6px);
+
+  .box {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
   }
-  .brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}
-  .logo{width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:700}
-  .brand h1{font-size:18px;margin:0}
-  .nav{margin-top:6px;display:flex;flex-direction:column;gap:8px}
-  .nav button{background:transparent;border:none;color:#dbeafe;text-align:left;padding:10px;border-radius:8px;cursor:pointer}
-  .nav button.active{background:rgba(255,255,255,0.06)}
-  .side-footer{margin-top:20px;color:#c7d2fe;font-size:13px}
-  /* Main */
-  .main{
-    flex:1;
-    min-height:80vh;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:14px;
-    padding:22px;
-    color:#fff;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.35);
-    backdrop-filter: blur(6px);
+
+  /* Left Box */
+  .left {
+    background: #2196f3;
+    left: -160px;
+    animation: moveFromLeft 2s ease-out forwards;
   }
-  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-  .search{display:flex;gap:12px;align-items:center}
-  input[type="search"]{padding:10px 12px;border-radius:10px;border:0;background:var(--glass);color:#fff;outline:none}
-  .btn{background:var(--accent);border:none;color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer}
-  /* Cards grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px}
-  .card{background:rgba(255,255,255,0.03);padding:16px;border-radius:12px}
-  .card h3{margin:0 0 6px 0;font-size:16px}
-  .small{font-size:13px;color:var(--muted)}
-  /* Table */
-  table{width:100%;border-collapse:collapse;color:#fff}
-  th,td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);}
-  th{color:#c7d2fe;font-weight:600}
-  .actions button{margin-right:6px}
-  /* Forms */
-  .form-row{display:flex;gap:10px;margin-bottom:10px}
-  .form-row > *{flex:1}
-  input,select,textarea{padding:10px;border-radius:8px;border:0;background:rgba(255,255,255,0.03);color:#fff;outline:none}
-  label{display:block;color:#c7d2fe;font-size:13px;margin-bottom:6px}
-  /* Modal */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:flex;align-items:center;justify-content:center;z-index:50}
-  .modal{background:#0b1220;padding:18px;border-radius:12px;width:920px;max-width:95%}
-  .row{display:flex;gap:10px}
-  .small-muted{font-size:13px;color:var(--muted)}
-  /* Responsive */
-  @media (max-width:900px){
-    .app{flex-direction:column;padding:14px}
-    .sidebar{width:100%;display:flex;flex-direction:row;align-items:center;justify-content:space-between}
-    .nav{flex-direction:row;gap:6px}
-    .main{padding:12px}
+
+  /* Right Box */
+  .right {
+    background: #e91e63;
+    right: -160px;
+    animation: moveFromRight 2s ease-out forwards;
   }
-  /* nice background element */
-  .hero{
-    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;padding:14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;
+
+  @keyframes moveFromLeft {
+    to {
+      left: 50%;
+      transform: translateX(-100%);
+    }
   }
-  .bg-decor{position:absolute;right:40px;top:40px;opacity:0.08;font-size:200px;color:#fff;pointer-events:none;user-select:none}
-  .badge{background:rgba(255,255,255,0.06);padding:8px 10px;border-radius:999px;font-size:13px}
-  .text-danger{color:#f87171}
-  .muted{color:var(--muted)}
-  .table-actions button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 8px;border-radius:8px;color:#fff;cursor:pointer}
+
+  @keyframes moveFromRight {
+    to {
+      right: 50%;
+      transform: translateX(100%);
+    }
+  }
 </style>
 </head>
+
 <body>
-<div class="app" id="app">
-  <div class="sidebar">
-    <div class="brand">
-      <div class="logo">SP</div>
-      <div>
-        <h1>Student Portal</h1>
-        <div class="small-muted">School Management</div>
-      </div>
-    </div>
 
-    <div class="nav" role="navigation">
-      <button data-view="dashboard" class="active">Dashboard</button>
-      <button data-view="students">Students</button>
-      <button data-view="attendance">Attendance</button>
-      <button data-view="assignments">Assignments</button>
-      <button data-view="grades">Grades</button>
-      <button data-view="settings">Settings</button>
-      <button id="logoutBtn" style="margin-top:14px;background:#ef4444">Logout</button>
-    </div>
-
-    <div class="side-footer">
-      <div>Logged in as <strong id="userDisplay">Admin</strong></div>
-      <div style="margin-top:8px;font-size:13px">Built with ❤ — Demo</div>
-    </div>
-  </div>
-
-  <div class="main" id="main">
-    <div class="topbar">
-      <div class="search">
-        <input id="searchInput" type="search" placeholder="Search students, assignments..." />
-        <button class="btn" id="addStudentBtn">+ Add Student</button>
-      </div>
-      <div>
-        <span class="badge" id="totalStudents">Students: 0</span>
-      </div>
-    </div>
-
-    <div id="content">
-      <!-- Dashboard view -->
-      <div id="view-dashboard" class="view">
-        <div class="hero">
-          <div>
-            <h2 style="margin:0">Welcome to the Student Portal</h2>
-            <div class="small-muted">Manage students, attendance, assignments & grades easily.</div>
-            <div style="margin-top:8px">
-              <button class="btn" id="goStudents">Manage Students</button>
-              <button class="btn" id="goAttendance" style="background:#06b6d4;margin-left:8px">Attendance</button>
-            </div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:30px;font-weight:700" id="statTotal">0</div>
-            <div class="small-muted">total records</div>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Quick Actions</h3>
-            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-              <button class="table-actions" id="quickAdd">➕ Add Student</button>
-              <button class="table-actions" id="quickAttendance">📝 Take Attendance</button>
-              <button class="table-actions" id="quickAssign">📚 New Assignment</button>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Recent Assignments</h3>
-            <div id="recentAssignments" class="small-muted">No assignments yet</div>
-          </div>
-          <div class="card">
-            <h3>Attendance Summary</h3>
-            <div id="attSummary" class="small-muted">No attendance data</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Students List</h3>
-          <div style="overflow:auto;max-height:260px;margin-top:10px">
-            <table id="tblDashboard">
-              <thead><tr><th>Name</th><th>Class</th><th>Roll</th><th>Actions</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Students view -->
-      <div id="view-students" class="view" style="display:none">
-        <h2>Students</h2>
-        <div style="margin-top:8px" class="card">
-          <h3>Add / Edit Student</h3>
-          <div style="margin-top:8px">
-            <div class="form-row">
-              <div>
-                <label>Name</label>
-                <input id="stuName" type="text" placeholder="Full name">
-              </div>
-              <div>
-                <label>Class</label>
-                <input id="stuClass" type="text" placeholder="e.g. 9-A">
-              </div>
-              <div>
-                <label>Roll No</label>
-                <input id="stuRoll" type="text" placeholder="Roll number">
-              </div>
-            </div>
-            <div class="form-row">
-              <div>
-                <label>Contact</label>
-                <input id="stuContact" type="text" placeholder="Phone / Guardian">
-              </div>
-              <div>
-                <label>Notes</label>
-                <input id="stuNotes" type="text" placeholder="Optional notes">
-              </div>
-              <div style="align-self:end">
-                <button class="btn" id="saveStudent">Save Student</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px" class="card">
-          <h3>All Students</h3>
-          <div style="overflow:auto;max-height:420px;margin-top:10px">
-            <table id="studentsTable">
-              <thead><tr><th>Roll</th><th>Name</th><th>Class</th><th>Contact</th><th>Notes</th><th>Actions</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Attendance view -->
-      <div id="view-attendance" class="view" style="display:none">
-        <h2>Attendance</h2>
-        <div class="card">
-          <label>Date</label>
-          <input id="attDate" type="date" value="">
-          <div style="margin-top:10px" id="attendanceList">Loading students...</div>
-          <div style="margin-top:10px">
-            <button class="btn" id="saveAttendance">Save Attendance</button>
-          </div>
-        </div>
-
-        <div style="margin-top:12px" class="card">
-          <h3>Attendance Records</h3>
-          <div style="max-height:320px;overflow:auto;margin-top:10px">
-            <table id="attendanceTable">
-              <thead><tr><th>Date</th><th>Present</th><th>Absent</th><th>Actions</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Assignments view -->
-      <div id="view-assignments" class="view" style="display:none">
-        <h2>Assignments</h2>
-        <div class="card">
-          <div class="form-row">
-            <div>
-              <label>Title</label>
-              <input id="assignTitle" type="text" placeholder="Assignment title">
-            </div>
-            <div>
-              <label>Due Date</label>
-              <input id="assignDue" type="date">
-            </div>
-            <div style="align-self:end">
-              <button class="btn" id="saveAssignment">Create</button>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px" class="card">
-          <h3>All Assignments</h3>
-          <div style="max-height:320px;overflow:auto;margin-top:10px">
-            <table id="assignmentTable">
-              <thead><tr><th>Title</th><th>Due</th><th>Actions</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Grades view -->
-      <div id="view-grades" class="view" style="display:none">
-        <h2>Grades</h2>
-        <div class="card">
-          <div class="form-row">
-            <div>
-              <label>Student Roll</label>
-              <input id="gradeRoll" type="text" placeholder="Roll number">
-            </div>
-            <div>
-              <label>Subject</label>
-              <input id="gradeSubject" type="text" placeholder="e.g. Math">
-            </div>
-            <div>
-              <label>Marks</label>
-              <input id="gradeMarks" type="number" placeholder="Marks">
-            </div>
-            <div style="align-self:end">
-              <button class="btn" id="saveGrade">Add Grade</button>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-top:12px" class="card">
-          <h3>All Grades</h3>
-          <div style="max-height:320px;overflow:auto;margin-top:10px">
-            <table id="gradesTable">
-              <thead><tr><th>Roll</th><th>Name</th><th>Subject</th><th>Marks</th><th>Actions</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Settings view -->
-      <div id="view-settings" class="view" style="display:none">
-        <h2>Settings</h2>
-        <div class="card">
-          <label>Admin Username</label>
-          <input id="adminUser" type="text" placeholder="admin">
-          <label style="margin-top:8px">Admin Password</label>
-          <input id="adminPass" type="text" placeholder="admin123">
-          <div style="margin-top:10px">
-            <button class="btn" id="saveSettings">Save</button>
-          </div>
-        </div>
-        <div style="margin-top:12px" class="card">
-          <h3>Data</h3>
-          <button id="exportBtn" class="table-actions">Export JSON</button>
-          <button id="importBtn" class="table-actions">Import JSON</button>
-          <input type="file" id="importFile" accept="application/json" style="display:none"/>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
+<div class="container">
+  <div class="box left">LEFT</div>
+  <div class="box right">RIGHT</div>
 </div>
 
-<!-- Login modal -->
-<div id="loginModal" class="modal-backdrop" style="display:flex">
-  <div class="modal" role="dialog" aria-modal="true">
-    <h2>Admin Login</h2>
-    <div style="display:flex;gap:12px;margin-top:10px">
-      <div style="flex:1">
-        <label>Username</label>
-        <input id="loginUser" type="text" placeholder="admin">
-      </div>
-      <div style="flex:1">
-        <label>Password</label>
-        <input id="loginPass" type="password" placeholder="admin123">
-      </div>
-    </div>
-    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
-      <div class="small-muted">Demo credentials: admin / admin123</div>
-      <div>
-        <button class="btn" id="loginBtn">Login</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-/* ======= Simple SPA + localStorage backend (demo) ======= */
-const storageKey = 'student_portal_v1';
-const defaultData = { students:[], attendance:[], assignments:[], grades:[], settings:{user:'admin',pass:'admin123'} };
-
-function loadState(){ try{ const v=localStorage.getItem(storageKey); return v?JSON.parse(v):structuredClone(defaultData);}catch(e){return structuredClone(defaultData);} }
-function saveState(s){ localStorage.setItem(storageKey, JSON.stringify(s)); renderAll(); }
-let state = loadState();
-
-/* ======= Login handling ======= */
-const loginModal = document.getElementById('loginModal');
-function showLogin(){ loginModal.style.display='flex'; }
-function hideLogin(){ loginModal.style.display='none'; }
-document.getElementById('loginBtn').addEventListener('click', ()=>{
-  const u=document.getElementById('loginUser').value.trim();
-  const p=document.getElementById('loginPass').value;
-  if(u===state.settings.user && p===state.settings.pass){ hideLogin(); initApp(); } else { alert('Invalid credentials'); }
-});
-/* Auto-fill */
-document.getElementById('loginUser').value = state.settings.user;
-document.getElementById('loginPass').value = state.settings.pass;
-
-/* If logged in? for demo we'll always show login */
-showLogin();
-
-/* ======= App init ======= */
-function initApp(){
-  // UI wiring
-  document.querySelectorAll('.nav button[data-view]').forEach(btn=>{
-    btn.addEventListener('click', ()=> switchView(btn.dataset.view));
-  });
-  document.getElementById('addStudentBtn').addEventListener('click', ()=> switchView('students') || document.getElementById('stuName').focus());
-  document.getElementById('saveStudent').addEventListener('click', saveStudent);
-  document.getElementById('saveAttendance').addEventListener('click', saveAttendance);
-  document.getElementById('saveAssignment').addEventListener('click', saveAssignment);
-  document.getElementById('saveGrade').addEventListener('click', saveGrade);
-  document.getElementById('saveSettings').addEventListener('click', saveSettings);
-  document.getElementById('logoutBtn').addEventListener('click', ()=> location.reload());
-  document.getElementById('searchInput').addEventListener('input', e=> renderStudentsTable(e.target.value));
-  document.getElementById('goStudents').addEventListener('click', ()=> switchView('students'));
-  document.getElementById('goAttendance').addEventListener('click', ()=> switchView('attendance'));
-  document.getElementById('quickAdd').addEventListener('click', ()=> switchView('students'));
-  document.getElementById('quickAttendance').addEventListener('click', ()=> switchView('attendance'));
-  document.getElementById('quickAssign').addEventListener('click', ()=> switchView('assignments'));
-  document.getElementById('attDate').valueAsDate = new Date();
-
-  // export/import
-  document.getElementById('exportBtn').addEventListener('click', ()=>{
-    const blob = new Blob([JSON.stringify(state, null, 2)],{type:'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download='student-portal-export.json'; a.click(); URL.revokeObjectURL(url);
-  });
-  document.getElementById('importBtn').addEventListener('click', ()=> document.getElementById('importFile').click());
-  document.getElementById('importFile').addEventListener('change', (e)=>{
-    const f = e.target.files[0]; if(!f) return;
-    const reader = new FileReader(); reader.onload = ()=> { try{ state = JSON.parse(reader.result); saveState(state); alert('Imported'); }catch(err){alert('Invalid JSON');} }
-    reader.readAsText(f);
-  });
-
-  renderAll();
-}
-
-/* ======= Student CRUD ======= */
-function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-
-function saveStudent(){
-  const name = document.getElementById('stuName').value.trim();
-  const sclass = document.getElementById('stuClass').value.trim();
-  const roll = document.getElementById('stuRoll').value.trim();
-  const contact = document.getElementById('stuContact').value.trim();
-  const notes = document.getElementById('stuNotes').value.trim();
-  if(!name || !roll){ alert('Name and Roll are required'); return; }
-  // prevent duplicate roll
-  const exists = state.students.find(s=> s.roll === roll);
-  if(exists){ // update existing
-    exists.name = name; exists.class = sclass; exists.contact = contact; exists.notes = notes;
-  } else {
-    state.students.push({ id: uid(), name, class: sclass, roll, contact, notes });
-  }
-  saveState(state);
-  document.getElementById('stuName').value=''; document.getElementById('stuClass').value=''; document.getElementById('stuRoll').value=''; document.getElementById('stuContact').value=''; document.getElementById('stuNotes').value='';
-  switchView('students');
-}
-
-function renderStudentsTable(filter=''){
-  const tbody = document.querySelector('#studentsTable tbody');
-  const dashTbody = document.querySelector('#tblDashboard tbody');
-  tbody.innerHTML=''; dashTbody.innerHTML='';
-  const list = state.students.filter(s=>{
-    const q = filter.trim().toLowerCase();
-    if(!q) return true;
-    return (s.name + ' ' + s.roll + ' ' + (s.class||'') + ' ' + (s.contact||'')).toLowerCase().includes(q);
-  });
-  list.forEach(s=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${escapeHtml(s.roll)}</td><td>${escapeHtml(s.name)}</td><td>${escapeHtml(s.class||'')}</td><td>${escapeHtml(s.contact||'')}</td><td>${escapeHtml(s.notes||'')}</td>
-    <td>
-      <button onclick="editStudent('${s.id}')">Edit</button>
-      <button onclick="deleteStudent('${s.id}')">Delete</button>
-    </td>`;
-    tbody.appendChild(tr);
-
-    const tr2 = document.createElement('tr');
-    tr2.innerHTML = <td>${escapeHtml(s.name)}</td><td>${escapeHtml(s.class||'')}</td><td>${escapeHtml(s.roll)}</td><td><button onclick="editStudent('${s.id}')">Edit</button></td>;
-    dashTbody.appendChild(tr2);
-  });
-  document.getElementById('totalStudents').textContent = 'Students: ' + state.students.length;
-  document.getElementById('statTotal').textContent = state.students.length;
-}
-
-window.editStudent = function(id){
-  const s = state.students.find(x=>x.id===id); if(!s) return;
-  document.getElementById('stuName').value = s.name;
-  document.getElementById('stuClass').value = s.class || '';
-  document.getElementById('stuRoll').value = s.roll;
-  document.getElementById('stuContact').value = s.contact || '';
-  document.getElementById('stuNotes').value = s.notes || '';
-  switchView('students');
-  // when saved, will update existing (unique by roll)
-}
-
-window.deleteStudent = function(id){
-  if(!confirm('Delete this student?')) return;
-  state.students = state.students.filter(s=>s.id!==id);
-  // also cleanup grades and attendance referencing roll
-  saveState(state);
-}
-
-/* ======= Attendance ======= */
-function renderAttendancePanel(){
-  const container = document.getElementById('attendanceList');
-  container.innerHTML='';
-  if(state.students.length===0){ container.innerHTML = '<div class="small-muted">No students yet. Add students first.</div>'; return; }
-  const date = document.getElementById('attDate').value || (new Date()).toISOString().slice(0,10);
-  const rec = state.attendance.find(a=>a.date===date) || { date, entries: {} };
-  state.students.forEach(s=>{
-    const id = 'att_'+s.roll;
-    const div = document.createElement('div');
-    div.style.display='flex'; div.style.justifyContent='space-between'; div.style.padding='8px 0'; div.style.borderBottom='1px dashed rgba(255,255,255,0.02)';
-    div.innerHTML = `<div>${escapeHtml(s.roll)} — ${escapeHtml(s.name)} <span class="small-muted">(${escapeHtml(s.class||'')})</span></div>
-      <div style="display:flex;gap:8px">
-        <label><input type="radio" name="${id}" value="present" ${rec.entries[s.roll]==='present'?'checked':''}/> Present</label>
-        <label><input type="radio" name="${id}" value="absent" ${rec.entries[s.roll]==='absent'?'checked':''}/> Absent</label>
-      </div>`;
-    container.appendChild(div);
-  });
-}
-
-function saveAttendance(){
-  const date = document.getElementById('attDate').value || (new Date()).toISOString().slice(0,10);
-  const entries = {};
-  state.students.forEach(s=>{
-    const radios = document.getElementsByName('att_' + s.roll);
-    let v = 'absent';
-    for(const r of radios){ if(r.checked){ v = r.value; break; } }
-    entries[s.roll] = v;
-  });
-  // replace or push
-  const idx = state.attendance.findIndex(a=>a.date===date);
-  if(idx>=0) state.attendance[idx] = { date, entries };
-  else state.attendance.push({ date, entries });
-  saveState(state);
-  alert('Attendance saved for ' + date);
-}
-
-/* render attendance records summary */
-function renderAttendanceRecords(){
-  const tbody = document.querySelector('#attendanceTable tbody'); tbody.innerHTML='';
-  state.attendance.slice().reverse().forEach(rec=>{
-    const present = Object.values(rec.entries).filter(v=>v==='present').length;
-    const absent = Object.values(rec.entries).filter(v=>v==='absent').length;
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${escapeHtml(rec.date)}</td><td>${present}</td><td>${absent}</td>
-      <td><button onclick="viewAttendance('${rec.date}')">View</button> <button onclick="deleteAttendance('${rec.date}')">Delete</button></td>`;
-    tbody.appendChild(tr);
-  });
-}
-window.viewAttendance = function(date){
-  const rec = state.attendance.find(a=>a.date===date);
-  if(!rec) return alert('Not found');
-  let s = 'Attendance for ' + date + '\\n\\n';
-  state.students.forEach(st => {
-    s += ${st.roll} - ${st.name}: ${rec.entries[st.roll] || 'absent'}\\n;
-  });
-  alert(s);
-}
-window.deleteAttendance = function(date){
-  if(!confirm('Delete attendance for ' + date + '?')) return;
-  state.attendance = state.attendance.filter(a=>a.date!==date);
-  saveState(state);
-}
-
-/* ======= Assignments ======= */
-function saveAssignment(){
-  const title = document.getElementById('assignTitle').value.trim();
-  const due = document.getElementById('assignDue').value;
-  if(!title || !due){ alert('Title and due date required'); return; }
-  state.assignments.push({ id: uid(), title, due });
-  saveState(state);
-  document.getElementById('assignTitle').value=''; document.getElementById('assignDue').value='';
-}
-function renderAssignments(){
-  const tbody = document.querySelector('#assignmentTable tbody'); tbody.innerHTML='';
-  const recent = document.getElementById('recentAssignments');
-  recent.innerHTML = '';
-  if(state.assignments.length===0){ recent.textContent = 'No assignments yet'; return; }
-  state.assignments.slice().reverse().forEach(a=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = <td>${escapeHtml(a.title)}</td><td>${escapeHtml(a.due)}</td><td><button onclick="deleteAssignment('${a.id}')">Delete</button></td>;
-    tbody.appendChild(tr);
-  });
-  // show up to 3 recent
-  state.assignments.slice(-3).reverse().forEach(a=> {
-    const d = document.createElement('div'); d.textContent = ${a.title} — due ${a.due}; recent.appendChild(d);
-  });
-}
-window.deleteAssignment = function(id){ state.assignments = state.assignments.filter(a=>a.id!==id); saveState(state); }
-
-/* ======= Grades ======= */
-function saveGrade(){
-  const roll = document.getElementById('gradeRoll').value.trim();
-  const sub = document.getElementById('gradeSubject').value.trim();
-  const marks = Number(document.getElementById('gradeMarks').value);
-  if(!roll || !sub || !isFinite(marks)){ alert('Please fill all fields'); return; }
-  const student = state.students.find(s=>s.roll===roll);
-  const name = student?student.name: 'Unknown';
-  state.grades.push({ id: uid(), roll, name, subject: sub, marks });
-  saveState(state);
-  document.getElementById('gradeRoll').value=''; document.getElementById('gradeSubject').value=''; document.getElementById('gradeMarks').value='';
-}
-function renderGrades(){
-  const tbody = document.querySelector('#gradesTable tbody'); tbody.innerHTML='';
-  state.grades.slice().reverse().forEach(g=>{
-    const tr = document.createElement('tr'); tr.innerHTML = `<td>${escapeHtml(g.roll)}</td><td>${escapeHtml(g.name)}</td><td>${escapeHtml(g.subject)}</td><td>${escapeHtml(String(g.marks))}</td>
-      <td><button onclick="deleteGrade('${g.id}')">Delete</button></td>`; tbody.appendChild(tr);
-  });
-}
-window.deleteGrade = function(id){ state.grades = state.grades.filter(g=>g.id!==id); saveState(state); }
-
-/* ======= Settings ======= */
-function saveSettings(){
-  const user = document.getElementById('adminUser').value.trim();
-  const pass = document.getElementById('adminPass').value;
-  if(user) state.settings.user = user; if(pass) state.settings.pass = pass;
-  saveState(state); alert('Settings saved. Next login will use new credentials.');
-}
-
-/* ======= Helpers & Rendering ======= */
-function renderAll(){
-  // update UI pieces
-  document.getElementById('userDisplay').textContent = state.settings.user || 'Admin';
-  renderStudentsTable();
-  renderAttendancePanel();
-  renderAttendanceRecords();
-  renderAssignments();
-  renderGrades();
-}
-
-function switchView(name){
-  document.querySelectorAll('.view').forEach(v=> v.style.display = 'none');
-  document.querySelectorAll('.nav button[data-view]').forEach(b=> b.classList.remove('active'));
-  const btn = document.querySelector('.nav button[data-view="'+name+'"]');
-  if(btn) btn.classList.add('active');
-  const el = document.getElementById('view-' + name);
-  if(el) el.style.display = 'block';
-  // rerender specific panels
-  if(name==='attendance'){ renderAttendancePanel(); renderAttendanceRecords(); }
-  if(name==='students'){ renderStudentsTable(); }
-  if(name==='assignments'){ renderAssignments(); }
-  if(name==='grades'){ renderGrades(); }
-}
-
-/* small utility */
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]); }
-
-/* initial call */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // if login modal hidden then init
-  if(loginModal.style.display==='none') initApp();
-  // keep date default
-  document.getElementById('attDate').valueAsDate = new Date();
-});
-</script>
 </body>
 </html>
